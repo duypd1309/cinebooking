@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    body, html {
+        @apply min-w-full flex items-center justify-center bg-[#0b0224ec] text-base;
+    }
+
+    table td,
+    th {
+        @apply border-2 border-blue-500 text-center w-[150px];
+    }
+
+    img {
+        @apply w-[960px] max-sm:w-4/5;
+    }
+
+}
