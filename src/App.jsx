@@ -4,12 +4,12 @@ import Sidebar from "./components/Sidebar";
 import Movies from "./components/Movies";
 import Banner from "./components/Banner";
 import Footer from "./components/Footer";
-import { Contact, Admin, VerifyUser, Payment } from "./pages/index";
+import { Contact, Admin, VerifyUser, Payment, News, Events } from "./pages/index";
 
 function App() {
   return (
     <>
-      <div className="w-screen">
+      <div className="min-w-full">
         <Sidebar />
         <Banner />
         <div className="sm:m-0 ml-[100px]">
@@ -19,6 +19,8 @@ function App() {
             <Route path="/admin" element={<Admin />} />
             <Route path="/my-account" element={<VerifyUser />} />
             <Route path="/cart-movies/*" element={<Payment />} />
+            <Route path="/news" element={<News />} />
+            <Route path="/events" element={<Events />} />
           </Routes>
         </div>
         <Footer />

@@ -1,52 +1,54 @@
 import { Link } from "react-router";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { FaUser } from "react-icons/fa";
 import styles from "../styles/sidebar.module.css";
 import Search from "./Search";
 
-const menuItems = [
-  { name: "home", label: "Home", link: "/" },
-  {
-    name: "movies",
-    label: "Movies",
-    link: "/movies",
-    subMenu: [
-      { label: "Submenu 1", link: "/movies/sub1" },
-      { label: "Submenu 2", link: "/movies/sub2" },
-    ],
-  },
-  {
-    name: "events",
-    label: "Events",
-    link: "/events",
-    subMenu: [
-      { label: "Submenu 1", link: "/events/sub1" },
-      { label: "Submenu 2", link: "/events/sub2" },
-    ],
-  },
-  {
-    name: "pages",
-    label: "Pages",
-    link: "/pages",
-    subMenu: [
-      { label: "Submenu 1", link: "/pages/sub1" },
-      { label: "Submenu 2", link: "/pages/sub2" },
-    ],
-  },
-  {
-    name: "news",
-    label: "News",
-    link: "/news",
-    subMenu: [
-      { label: "Content 1", link: "/news/sub1" },
-      { label: "Content 2", link: "/news/sub2" },
-    ],
-  },
-  { name: "contact", label: "Contact", link: "/contact" },
-];
-
 function Sidebar() {
+  const menuItems = [
+    { name: "home", label: "Home", link: "/" },
+    {
+      name: "movies",
+      label: "Movies",
+      link: "/movies",
+      subMenu: [
+        { label: "Submenu 1", link: "/movies/sub1" },
+        { label: "Submenu 2", link: "/movies/sub2" },
+      ],
+    },
+    {
+      name: "events",
+      label: "Events",
+      link: "/events",
+      subMenu: [
+        { label: "Submenu 1", link: "/events/sub1" },
+        { label: "Submenu 2", link: "/events/sub2" },
+      ],
+    },
+    {
+      name: "pages",
+      label: "Pages",
+      link: "/pages",
+      subMenu: [
+        { label: "Submenu 1", link: "/pages/sub1" },
+        { label: "Submenu 2", link: "/pages/sub2" },
+      ],
+    },
+    {
+      name: "news",
+      label: "News",
+      link: "/news",
+      subMenu: [
+        { label: "Content 1", link: "/news/sub1" },
+        { label: "Content 2", link: "/news/sub2" },
+      ],
+    },
+    { name: "contact", label: "Contact", link: "/contact" },
+  ];
+
   const [dropdown, setDropdown] = useState(null);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const sidebarRef = useRef(null);
 
   const handleMouseEnter = (menu) => {
     setDropdown(menu);
@@ -56,16 +58,38 @@ function Sidebar() {
     setDropdown(null);
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (sidebarRef.current) {
+        const sidebarHeight = sidebarRef.current.offsetHeight;
+        if (window.scrollY > sidebarHeight) {
+          setIsScrolled(true);
+        } else {
+          setIsScrolled(false);
+        }
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <>
       <div
-        className={`${styles.sidebar} z-10 min-h-[80px] items-center justify-center text-base min-w-full flex sm:flex-row text-zinc-50 bg-[#0b0224] sm:space-x-4 space-y-4 sm:space-y-0 relative`}>
+        ref={sidebarRef}
+        className={`${styles.sidebar} z-10 min-h-[80px] items-center justify-center text-base min-w-full flex sm:flex-row text-zinc-50 sm:space-x-4 space-y-4 sm:space-y-0 fixed border-b border-gray-300 ${isScrolled ? "bg-black dropdown-effect" : ""
+          }`}
+      >
         {menuItems.map((item) => (
           <div
             key={item.name}
             onMouseEnter={() => handleMouseEnter(item.name)}
             onMouseLeave={handleMouseLeave}
-            className="relative">
+            className="relative"
+          >
             <Link to={item.link}>
               {item.label} {item.subMenu && <span className="arrow">&#9662;</span>}
             </Link>
@@ -77,7 +101,8 @@ function Sidebar() {
                   backgroundColor: "#333",
                   color: "#fff",
                   zIndex: 1001,
-                }}>
+                }}
+              >
                 {item.subMenu.map((subItem, index) => (
                   <div key={index}>
                     <Link to={subItem.link}>{subItem.label}</Link>

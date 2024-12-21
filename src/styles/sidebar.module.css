@@ -26,6 +26,7 @@ img {
   border-top: 2px solid #000;
 }
 
+
 @media (max-width: 640px) {
   .sidebar {
     flex-direction: column;

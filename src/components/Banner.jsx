@@ -32,7 +32,7 @@ const Slideshow = () => {
     };
 
     return (
-        <div className="relative w-full mx-auto flex">
+        <div className="relative min-w-full flex">
             {/* Overlay for Booking */}
             {showBooking && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
