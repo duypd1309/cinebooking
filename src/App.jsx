@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router";
 import Sidebar from "./components/Sidebar";
 import Movies from "./components/Movies";
 import Banner from "./components/Banner";
