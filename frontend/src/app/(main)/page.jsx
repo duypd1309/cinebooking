@@ -1,5 +1,4 @@
 import FeaturedMoviesSlider from "../components/FeaturedMoviesSlider";
-import Card from "../components/Card";
 import FeedbackSection from "../components/Feedback";
 import MovieSlider from "../components/MovieSlider";
 
@@ -10,8 +9,6 @@ export default function Home() {
       <div className="mt-[92px]">
         <FeaturedMoviesSlider />
       </div>
-
-      <Card></Card>
 
       {/* Phim đang chiếu */}
       <MovieSlider nowShowing={true} />
